@@ -25,7 +25,12 @@ async function fetchJson(url, timeoutMs = 35000) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const response = await fetch(url, { signal: controller.signal });
+    const response = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        "ngrok-skip-browser-warning": "true",
+      },
+    });
     const text = await response.text();
     let payload = null;
     try {
