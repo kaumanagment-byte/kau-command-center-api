@@ -106,7 +106,7 @@ function buildInsights(data) {
 }
 
 async function unified(range) {
-  const [ads, status, summary, accounts, comparison, trends, digest, crmConfig, crm] = await Promise.all([
+  const [ads, status, summary, accounts, comparison, trends, digest, mentions, crmConfig, crm] = await Promise.all([
     fetchJson(`${ADS_BASE_URL}/api/dashboard?range=${encodeURIComponent(range)}`, 25000),
     fetchJson(`${INTELLIGENCE_BASE_URL}/api/status`, 10000),
     fetchJson(`${INTELLIGENCE_BASE_URL}/api/summary`, 12000),
@@ -114,11 +114,12 @@ async function unified(range) {
     fetchJson(`${INTELLIGENCE_BASE_URL}/api/livedune/comparison`, 12000),
     fetchJson(`${INTELLIGENCE_BASE_URL}/api/trends/university`, 12000),
     fetchJson(`${INTELLIGENCE_BASE_URL}/api/kazakhstan/digest`, 12000),
+    fetchJson(`${INTELLIGENCE_BASE_URL}/api/kau/mentions`, 12000),
     fetchJson(`${CRM_BASE_URL}/api/config`, 12000),
     fetchJson(`${CRM_BASE_URL}/api/deal-dashboard?range=${encodeURIComponent(range)}`, 45000),
   ]);
 
-  const data = { ads, status, summary, accounts, comparison, trends, digest, crmConfig, crm };
+  const data = { ads, status, summary, accounts, comparison, trends, digest, mentions, crmConfig, crm };
   return {
     fetchedAt: new Date().toISOString(),
     range,
@@ -131,6 +132,7 @@ async function unified(range) {
       comparison: comparison.payload || null,
       trends: trends.payload || null,
       digest: digest.payload || null,
+      mentions: mentions.payload || null,
     },
     crm: {
       config: crmConfig.payload || null,
