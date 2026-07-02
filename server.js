@@ -1,8 +1,9 @@
-import http from "node:http";
+﻿import http from "node:http";
 import { readFile } from "node:fs/promises";
 import { existsSync, readFileSync, appendFileSync, mkdirSync } from "node:fs";
 import { extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { enrollmentDashboard, queueStatus } from "./enrollment-queue.js";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const publicDir = resolve(__dirname, "public");
@@ -84,6 +85,14 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === "/api/users") {
       return await handleUsers(res);
+    }
+
+    if (url.pathname === "/api/enrollment-dashboard") {
+      return sendJson(res, await enrollmentDashboard());
+    }
+
+    if (url.pathname === "/api/queue/status") {
+      return sendJson(res, await queueStatus());
     }
 
     if (url.pathname === "/api/events") {
@@ -1073,3 +1082,4 @@ function buildDemoDealDashboard(rangeName) {
     fetchedAt: new Date().toISOString(),
   };
 }
+

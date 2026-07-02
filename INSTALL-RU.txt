@@ -1,0 +1,29 @@
+КУДА ЗАГРУЖАТЬ
+
+GitHub-репозиторий:
+https://github.com/kaumanagment-byte/kau-command-center-api
+
+Все файлы из этой папки загрузить В КОРЕНЬ репозитория.
+Папку api-proxy создавать не нужно.
+
+Должно получиться:
+
+kau-command-center-api/
+  server.js
+  enrollment-queue.js
+  package.json
+  package-lock.json
+  public/
+    enrollment.html
+
+После Commit changes Render автоматически запустит npm install и npm start.
+
+Рабочая страница после успешного деплоя:
+https://kau-command-center-api.onrender.com/enrollment.html
+
+Переменные Render:
+ENROLLMENT_XLSX_URL=<ссылка SharePoint>
+ENROLLMENT_TARGET_DATE=2026-08-25
+ENROLLMENT_CACHE_SECONDS=300
+
+Важно: SharePoint-файл должен иметь доступ «Все, у кого есть ссылка».
