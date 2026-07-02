@@ -95,6 +95,13 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, await queueStatus());
     }
 
+    if (url.pathname === "/enrollment.html") {
+      const body = await readFile(resolve(__dirname, "enrollment.html"));
+      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" });
+      res.end(body);
+      return;
+    }
+
     if (url.pathname === "/api/events") {
       return handleEvents(req, res);
     }
